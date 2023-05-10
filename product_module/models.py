@@ -13,6 +13,10 @@ class ProductCategory(models.Model):
     def __str__(self):
         return f'( {self.title} - {self.url_title} )'
 
+    class Meta:
+        verbose_name = 'دسته بندی'
+        verbose_name_plural = 'دسته بندی ها'
+
 
 class ProductInformation(models.Model):
     color = models.CharField(max_length=200, verbose_name='رنگ')
@@ -20,6 +24,10 @@ class ProductInformation(models.Model):
 
     def __str__(self):
         return f'{self.size} - {self.color}'
+
+    class Meta:
+        verbose_name = 'اطلاعات تکمیلی'
+        verbose_name_plural = 'تمامی اطلاعات تکمیلی'
 
 
 class Product(models.Model):
@@ -53,3 +61,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.price})"
+
+    class Meta:
+        verbose_name = 'محصول'
+        verbose_name_plural = 'محصولات'
