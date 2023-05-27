@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
-from django.views import View
-from .forms import ContactUsModelForm, ProfileForm
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic import ListView
 
-from .models import ContactUs, UserProfile
+from .forms import ContactUsModelForm
+from django.views.generic.edit import CreateView
+
+from .models import UserProfile
 
 
 class ContactUsView(CreateView):
@@ -18,22 +18,14 @@ def store_file(file):
             dest.write(chunk)
 
 
-class CreateProfileView(View):
-    def get(self, request):
-        form = ProfileForm()
-        return render(request, 'contact_module/create_profile_page.html', {
-            'form': form
-        })
+class CreateProfileView(CreateView):
+    template_name = 'contact_module/create_profile_page.html'
+    model = UserProfile
+    fields = '__all__'
+    success_url = '/contact-us/create-profile'
 
-    def post(self, request):
-        submitted_form = ProfileForm(request.POST, request.FILES)
 
-        if submitted_form.is_valid():
-            # store_file(request.FILES['profile'])
-            profile = UserProfile(image=request.FILES["user_image"])
-            profile.save()
-            return redirect('/contact-us/create-profile')
-
-        return render(request, 'contact_module/create_profile_page.html', {
-            'form': submitted_form
-        })
+class ProfilesView(ListView):
+    model = UserProfile
+    template_name = 'contact_module/profiles_list_page.html'
+    context_object_name = 'profiles'
