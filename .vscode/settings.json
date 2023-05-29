@@ -1,5 +1,5 @@
 {
     "editor.fontSize": 20,
-    "files.autoSave": "onFocusChange",
+    "files.autoSave": "afterDelay",
     "sqltools.useNodeRuntime": true
 }
