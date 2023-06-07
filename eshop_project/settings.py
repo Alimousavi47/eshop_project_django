@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'site_module',
     'polls',
     'article_module',
+    'user_panel_module',
     # external apps
     'django_render_partial',
     'jalali_date',
