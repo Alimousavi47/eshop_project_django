@@ -1,15 +1,20 @@
-function sendArticleComment() {
-    // console.log('submit article comment');
-    var comment = $('#commentText').val();
-
-    $.get('/articles/add-article-comment', {
-        articleComment: comment,
-        articleId: 23,
-        parentId: null
-    }).then(res => {
-        console.log(res);
-    });
-
     // ajax => asynchronous javascript and xml
     // json => javascript object notation
+function sendArticleComment(articleId) {
+    var comment = $('#commentText').val();
+    var parentId = $('#parent_id').val();
+    console.log(parentId);
+    $.get('/articles/add-article-comment', {
+        article_comment: comment,
+        article_id: articleId,
+        parent_id: parentId
+    }).then(res => {
+        console.log(res);
+        location.reload();
+    });
+}
+
+function fillParentId(parentId) {
+    $('#parent_id').val(parentId);
+    document.getElementById('comment_form').scrollIntoView({behavior: "smooth"});
 }
