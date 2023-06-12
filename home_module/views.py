@@ -1,8 +1,9 @@
 from django.shortcuts import render
-
 from django.views.generic.base import TemplateView
 
+from product_module.models import Product
 from site_module.models import SiteSetting, FooterLinkBox, Slider
+from utils.convertors import group_list
 
 
 class HomeView(TemplateView):
@@ -12,6 +13,8 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         sliders = Slider.objects.filter(is_active=True)
         context['sliders'] = sliders
+        latest_products = Product.objects.filter(is_active=True, is_delete=False).order_by('-id')[:12]
+        context['latest_products'] = group_list(latest_products)
         return context
 
 
@@ -26,8 +29,6 @@ def site_header_component(request):
 def site_footer_component(request):
     setting: SiteSetting = SiteSetting.objects.filter(is_main_setting=True).first()
     footer_link_boxes = FooterLinkBox.objects.all()
-    for item in footer_link_boxes:
-        item.footerlink_set
     context = {
         'site_setting': setting,
         'footer_link_boxes': footer_link_boxes
