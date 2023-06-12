@@ -3,6 +3,8 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
+
+from site_module.models import SiteBanner
 from .models import Product, ProductCategory, ProductBrand
 
 
@@ -22,6 +24,7 @@ class ProductListView(ListView):
         context['db_max_price'] = db_max_price
         context['start_price'] = self.request.GET.get('start_price') or 0
         context['end_price'] = self.request.GET.get('end_price') or db_max_price
+        context['banners'] = SiteBanner.objects.filter(is_active=True, position__iexact=SiteBanner.SiteBannerPositions.product_list)
         return context
 
     def get_queryset(self):
@@ -56,6 +59,7 @@ class ProductDetailView(DetailView):
         request = self.request
         favorite_product_id = request.session.get("product_favorites")
         context['is_favorite'] = favorite_product_id == str(loaded_product.id)
+        context['banners'] = SiteBanner.objects.filter(is_active=True, position__iexact=SiteBanner.SiteBannerPositions.product_detail)
         return context
 
 
