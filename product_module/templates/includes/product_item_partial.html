@@ -1,26 +1,25 @@
 {% load thumbnail %}
+{% load poll_extras %}
 
-<div class="col-sm-4">
+<div class="col-sm-{{ col_size }}">
     <div class="product-image-wrapper">
         <div class="single-products">
             <div class="productinfo text-center">
                 {% if product.image %}
-
-                    {% thumbnail product.image "268x250" quality=100 crop="center" as im %}
-    					<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-					{% endthumbnail %}
-                    {% comment %} <img src="{{ product.image.url }}" alt=""> {% endcomment %}
+                    {% thumbnail product.image "268x250" quality=90 crop='center' as im %}
+                        <img src="{{ im.url }}">
+                    {% endthumbnail %}
                 {% else %}
                     <img src="/static/images/shop/product.jpg" alt="">
                 {% endif %}
-                <h2>{{ product.price }} تومان</h2>
+                <h2>{{ product.price | three_digits_currency }}</h2>
                 <p>{{ product.title }}</p>
                 <a href="#" class="btn btn-default add-to-cart"><i
                         class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
             </div>
             <div class="product-overlay">
                 <div class="overlay-content">
-                    <h2>{{ product.price }} تومان</h2>
+                    <h2>{{ product.price | three_digits_currency }}</h2>
                     <p>{{ product.title }}</p>
                     <a href="#" class="btn btn-default add-to-cart"><i
                             class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
